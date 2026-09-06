@@ -1,0 +1,31 @@
+{
+  "name": "aiops-event-driven-agents",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "demo": "tsx src/demo/run-demo.ts",
+    "start": "tsx src/app.ts",
+    "simulator": "tsx src/simulator/index.ts",
+    "collector": "tsx src/collector/index.ts",
+    "seed:topology": "tsx scripts/seed-topology.ts",
+    "eval:monitor": "tsx scripts/eval-monitor.ts",
+    "eval:rca": "tsx scripts/eval-rca.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "kafkajs": "^2.2.4",
+    "mysql2": "^3.14.4",
+    "neo4j-driver": "^5.28.2",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

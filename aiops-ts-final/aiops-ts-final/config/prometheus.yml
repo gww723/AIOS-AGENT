@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: aiops-services
+    static_configs:
+      - targets:
+          - simulator:9101
+          - simulator:9102
+          - simulator:9103
+          - simulator:9104
+          - simulator:9105
+          - simulator:9106
+          - simulator:9107
+          - simulator:9108
+          - simulator:9109
+          - simulator:9110
+          - simulator:9111

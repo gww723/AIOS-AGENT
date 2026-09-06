@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS aiops CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE aiops;
+CREATE TABLE IF NOT EXISTS processed_events (event_id VARCHAR(128), consumer_name VARCHAR(128), processed_at DATETIME(3), PRIMARY KEY(event_id, consumer_name));
+CREATE TABLE IF NOT EXISTS incident_state (incident_id VARCHAR(128) PRIMARY KEY, primary_incident_id VARCHAR(128) NOT NULL, status VARCHAR(64) NOT NULL, payload JSON NOT NULL, updated_at DATETIME(3), INDEX idx_primary(primary_incident_id));
+CREATE TABLE IF NOT EXISTS active_alert (alert_fingerprint VARCHAR(128) PRIMARY KEY, incident_id VARCHAR(128) NOT NULL, primary_incident_id VARCHAR(128) NOT NULL, payload JSON NOT NULL, updated_at DATETIME(3), INDEX idx_primary(primary_incident_id));
+CREATE TABLE IF NOT EXISTS active_root_incident (root_cause_fingerprint VARCHAR(255) PRIMARY KEY, primary_incident_id VARCHAR(128) NOT NULL, payload JSON NOT NULL, updated_at DATETIME(3));
+CREATE TABLE IF NOT EXISTS rca_events (event_id VARCHAR(128) PRIMARY KEY, incident_id VARCHAR(128) NOT NULL, primary_incident_id VARCHAR(128) NOT NULL, completed_at VARCHAR(40), payload JSON NOT NULL, INDEX idx_incident(incident_id), INDEX idx_primary(primary_incident_id));
+CREATE TABLE IF NOT EXISTS repair_attempt (execution_id VARCHAR(128) PRIMARY KEY, incident_id VARCHAR(128), primary_incident_id VARCHAR(128), status VARCHAR(64), attempt_no INT, payload JSON NOT NULL, updated_at DATETIME(3), INDEX idx_primary(primary_incident_id));
+CREATE TABLE IF NOT EXISTS verification_session (verification_id VARCHAR(128) PRIMARY KEY, incident_id VARCHAR(128), primary_incident_id VARCHAR(128), execution_id VARCHAR(128), status VARCHAR(64), end_at VARCHAR(40), payload JSON NOT NULL, updated_at DATETIME(3), INDEX idx_due(status,end_at));
+CREATE TABLE IF NOT EXISTS auto_repair_history (history_id VARCHAR(128) PRIMARY KEY, primary_incident_id VARCHAR(128), root_cause_node VARCHAR(128), fault_type VARCHAR(64), action VARCHAR(64), result VARCHAR(32), payload JSON NOT NULL, created_at DATETIME(3), INDEX idx_lookup(root_cause_node,fault_type,action));
+CREATE TABLE IF NOT EXISTS pending_approval (execution_id VARCHAR(128) PRIMARY KEY, incident_id VARCHAR(128), payload JSON NOT NULL, created_at DATETIME(3));
+CREATE TABLE IF NOT EXISTS incident_report (report_id VARCHAR(128) PRIMARY KEY, primary_incident_id VARCHAR(128), payload JSON NOT NULL, generated_at DATETIME(3), INDEX idx_primary(primary_incident_id));
+CREATE TABLE IF NOT EXISTS change_record (change_id VARCHAR(128) PRIMARY KEY, node_name VARCHAR(128), change_type VARCHAR(64), version VARCHAR(128), summary VARCHAR(500), occurred_at VARCHAR(40), INDEX idx_node_time(node_name,occurred_at));
+INSERT IGNORE INTO change_record VALUES ('chg-payment-v231','payment-service','deployment','v2.3.1','payment-service 发布 v2.3.1','2026-09-05T08:00:00.000Z');

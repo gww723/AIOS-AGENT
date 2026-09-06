@@ -1,0 +1,2 @@
+import type {ChangeEvidence,ChangeProvider} from "./change-provider.js";
+export class InMemoryChangeProvider implements ChangeProvider { data=new Map<string,ChangeEvidence[]>(); add(node:string,c:ChangeEvidence){this.data.set(node,[...(this.data.get(node)??[]),c]);} async query(node:string,start:string,end:string){const s=new Date(start).getTime(),e=new Date(end).getTime();return (this.data.get(node)??[]).filter(x=>{const t=new Date(x.occurredAt).getTime();return t>=s&&t<=e;});}}

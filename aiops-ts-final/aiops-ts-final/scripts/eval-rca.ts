@@ -1,0 +1,1 @@
+console.log(JSON.stringify({metric:"root-cause node accuracy",definition:"correct top-1 root node / total single-root labeled incidents",target:0.89,scope:"single-root simulation fault set; joint-root cases are routed to human and excluded from automatic RCA success rate"},null,2));

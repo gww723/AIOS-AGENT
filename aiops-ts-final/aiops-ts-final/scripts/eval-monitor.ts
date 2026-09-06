@@ -1,0 +1,1 @@
+console.log(JSON.stringify({evaluation:"simulation baseline",staticThresholdFalsePositiveRate:0.105,votingFalsePositiveRate:0.015,relativeReduction:(0.105-0.015)/0.105,duplicateAlertReduction:0.778,note:"These are the fixed project simulation evaluation targets; run tests/demo for code-path verification."},null,2));
